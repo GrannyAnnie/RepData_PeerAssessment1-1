@@ -60,10 +60,10 @@ The total daily steps mean is `r dailyStepsMean` and the total daily steps media
   2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
   
 ```{r part 2, echo=TRUE}
-## create dataset of average steps by interval
-    avgSteps_int <- aggregate(steps ~ interval, activity, mean)
-    plot(avgSteps_int$interval,avgSteps_int$steps, type="l", xlab="Interval", ylab="Number of Steps", main="Average Daily Number of Steps by Interval")
-    maxInterval <- avgSteps_int[which.max(avgSteps_int$steps),1]
+        ## create dataset of average steps by interval
+        avgSteps_int <- aggregate(steps ~ interval, activity, mean)
+        plot(avgSteps_int$interval,avgSteps_int$steps, type="l", xlab="Interval", ylab="Number of Steps", main="Average Daily Number of Steps by Interval")
+        maxInterval <- avgSteps_int[which.max(avgSteps_int$steps),1]
 ```    
   
 Across all days in the dataset, the 5-minute inteval which contains the maximum number of steps is `r maxInterval`
@@ -85,25 +85,25 @@ Across all days in the dataset, the 5-minute inteval which contains the maximum 
         ## calculate number of missing values
         nas <- nrow(activity[is.na(activity$steps),])
 
-## create clean dataset that excludes NA data
-notMissingData <- activity[!is.na(activity$steps),]
+        ## create clean dataset that excludes NA data
+        notMissingData <- activity[!is.na(activity$steps),]
 
-## create dataset that only includes NA data
-missingData <- activity[is.na(activity$steps),]
+        ## create dataset that only includes NA data
+        missingData <- activity[is.na(activity$steps),]
 
-## create dataset of average steps by interval excluding missing data
-avgSteps <- aggregate(steps ~ interval, activity, mean)  
+        ## create dataset of average steps by interval excluding missing data
+        avgSteps <- aggregate(steps ~ interval, activity, mean)  
 
-## replace NA with averages
-noLongerMissingData <- merge(missingData, avgSteps, by= "interval")
+        ## replace NA with averages
+        noLongerMissingData <- merge(missingData, avgSteps, by= "interval")
 
-## reorder, rename and merge
-noLMD2 <- noLongerMissingData[,c(4,3,1)]
-colnames(noLMD2) <- c("steps", "date", "interval")
-completeData <- rbind(notMissingData, noLMD2)
+        ## reorder, rename and merge
+        noLMD2 <- noLongerMissingData[,c(4,3,1)]
+        colnames(noLMD2) <- c("steps", "date", "interval")
+        completeData <- rbind(notMissingData, noLMD2)
 
-##Test that completeData contains no nas
-completedatanas <- nrow(completeData[is.na(completeData$steps),])
+        ##Test that completeData contains no nas
+        completedatanas <- nrow(completeData[is.na(completeData$steps),])
 ```
 The total number of missing values is `r nas`
 
@@ -112,9 +112,9 @@ My new dataset, completedata,  contains `r completedatanas`  NAs
 ```{r histogram and new averages, echo=TRUE}
         dailySteps2 <- aggregate(steps ~ date, completeData, sum)
         hist(dailySteps2$steps, main = paste("Total Daily Steps"), xlab="Number of Steps")
-    dailyStepsMean2 <- mean(dailySteps2$steps)
-    dailyStepsMedian2 <- median(dailySteps2$steps)
-    ```
+        dailyStepsMean2 <- mean(dailySteps2$steps)
+        dailyStepsMedian2 <- median(dailySteps2$steps)
+```
 
 The total daily steps mean is `r dailyStepsMean2` and the total daily steps median is `r dailyStepsMedian2`.
 
@@ -150,6 +150,6 @@ For this part the weekdays()function may be of some help here. Use the dataset w
         plot(as.numeric(names(weekdaySteps)), weekdaySteps, main="Weekday",
                 ylab="Number of Steps", xlab="Interval", type = "l")
        
-        ```
+```
  
                 

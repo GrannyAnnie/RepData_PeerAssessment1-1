@@ -68,15 +68,15 @@ The total daily steps mean is 1.0766189\times 10^{4} and the total daily steps m
   
 
 ```r
-## create dataset of average steps by interval
-    avgSteps_int <- aggregate(steps ~ interval, activity, mean)
-    plot(avgSteps_int$interval,avgSteps_int$steps, type="l", xlab="Interval", ylab="Number of Steps", main="Average Daily Number of Steps by Interval")
+        ## create dataset of average steps by interval
+        avgSteps_int <- aggregate(steps ~ interval, activity, mean)
+        plot(avgSteps_int$interval,avgSteps_int$steps, type="l", xlab="Interval", ylab="Number of Steps", main="Average Daily Number of Steps by Interval")
 ```
 
 ![](PA1_template_files/figure-html/part 2-1.png)<!-- -->
 
 ```r
-    maxInterval <- avgSteps_int[which.max(avgSteps_int$steps),1]
+        maxInterval <- avgSteps_int[which.max(avgSteps_int$steps),1]
 ```
   
 Across all days in the dataset, the 5-minute inteval which contains the maximum number of steps is 835
@@ -99,25 +99,25 @@ Across all days in the dataset, the 5-minute inteval which contains the maximum 
         ## calculate number of missing values
         nas <- nrow(activity[is.na(activity$steps),])
 
-## create clean dataset that excludes NA data
-notMissingData <- activity[!is.na(activity$steps),]
+        ## create clean dataset that excludes NA data
+        notMissingData <- activity[!is.na(activity$steps),]
 
-## create dataset that only includes NA data
-missingData <- activity[is.na(activity$steps),]
+        ## create dataset that only includes NA data
+        missingData <- activity[is.na(activity$steps),]
 
-## create dataset of average steps by interval excluding missing data
-avgSteps <- aggregate(steps ~ interval, activity, mean)  
+        ## create dataset of average steps by interval excluding missing data
+        avgSteps <- aggregate(steps ~ interval, activity, mean)  
 
-## replace NA with averages
-noLongerMissingData <- merge(missingData, avgSteps, by= "interval")
+        ## replace NA with averages
+        noLongerMissingData <- merge(missingData, avgSteps, by= "interval")
 
-## reorder, rename and merge
-noLMD2 <- noLongerMissingData[,c(4,3,1)]
-colnames(noLMD2) <- c("steps", "date", "interval")
-completeData <- rbind(notMissingData, noLMD2)
+        ## reorder, rename and merge
+        noLMD2 <- noLongerMissingData[,c(4,3,1)]
+        colnames(noLMD2) <- c("steps", "date", "interval")
+        completeData <- rbind(notMissingData, noLMD2)
 
-##Test that completeData contains no nas
-completedatanas <- nrow(completeData[is.na(completeData$steps),])
+        ##Test that completeData contains no nas
+        completedatanas <- nrow(completeData[is.na(completeData$steps),])
 ```
 The total number of missing values is 2304
 
@@ -132,8 +132,8 @@ My new dataset, completedata,  contains 0  NAs
 ![](PA1_template_files/figure-html/histogram and new averages-1.png)<!-- -->
 
 ```r
-    dailyStepsMean2 <- mean(dailySteps2$steps)
-    dailyStepsMedian2 <- median(dailySteps2$steps)
+        dailyStepsMean2 <- mean(dailySteps2$steps)
+        dailyStepsMedian2 <- median(dailySteps2$steps)
 ```
 
 The total daily steps mean is 1.0766189\times 10^{4} and the total daily steps median is 1.0766189\times 10^{4}.
