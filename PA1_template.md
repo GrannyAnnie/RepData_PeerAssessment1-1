@@ -24,9 +24,10 @@ The dataset is stored in a comma-separated-value (CSV) file and there are a tota
 
 
 
-```{r file into variable, echo=TRUE}
+
+```r
     activity <- read.csv("./repdata_data_activity/activity.csv")
-    ```
+```
 
 
 =============================================================================================
@@ -42,13 +43,19 @@ For this part of the assignment, you can ignore the missing values in the datase
 
   3. Calculate and report the mean and median of the total number of steps taken per day
 
-```{r part 1, echo=TRUE}
+
+```r
     dailySteps <- aggregate(steps ~ date, activity, sum)
     hist(dailySteps$steps, main = paste("Total Daily Steps"), xlab="Number of Steps")
+```
+
+![](PA1_template_files/figure-html/part 1-1.png)<!-- -->
+
+```r
     dailyStepsMean <- mean(dailySteps$steps)
     dailyStepsMedian <- median(dailySteps$steps)
-    ```
-The total daily steps mean is `r dailyStepsMean` and the total daily steps median is `r dailyStepsMedian`.
+```
+The total daily steps mean is 1.0766189\times 10^{4} and the total daily steps median is 10765.
 
 =============================================================================================
 
@@ -59,14 +66,20 @@ The total daily steps mean is `r dailyStepsMean` and the total daily steps media
 
   2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
   
-```{r part 2, echo=TRUE}
+
+```r
 ## create dataset of average steps by interval
     avgSteps_int <- aggregate(steps ~ interval, activity, mean)
     plot(avgSteps_int$interval,avgSteps_int$steps, type="l", xlab="Interval", ylab="Number of Steps", main="Average Daily Number of Steps by Interval")
+```
+
+![](PA1_template_files/figure-html/part 2-1.png)<!-- -->
+
+```r
     maxInterval <- avgSteps_int[which.max(avgSteps_int$steps),1]
-```    
+```
   
-Across all days in the dataset, the 5-minute inteval which contains the maximum number of steps is `r maxInterval`
+Across all days in the dataset, the 5-minute inteval which contains the maximum number of steps is 835
   
 =============================================================================================
 
@@ -81,7 +94,8 @@ Across all days in the dataset, the 5-minute inteval which contains the maximum 
 
 4. Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
 
-```{r part 3, echo=TRUE}
+
+```r
         ## calculate number of missing values
         nas <- nrow(activity[is.na(activity$steps),])
 
@@ -105,18 +119,24 @@ completeData <- rbind(notMissingData, noLMD2)
 ##Test that completeData contains no nas
 completedatanas <- nrow(completeData[is.na(completeData$steps),])
 ```
-The total number of missing values is `r nas`
+The total number of missing values is 2304
 
-My new dataset, completedata,  contains `r completedatanas`  NAs
+My new dataset, completedata,  contains 0  NAs
 
-```{r histogram and new averages, echo=TRUE}
+
+```r
         dailySteps2 <- aggregate(steps ~ date, completeData, sum)
         hist(dailySteps2$steps, main = paste("Total Daily Steps"), xlab="Number of Steps")
+```
+
+![](PA1_template_files/figure-html/histogram and new averages-1.png)<!-- -->
+
+```r
     dailyStepsMean2 <- mean(dailySteps2$steps)
     dailyStepsMedian2 <- median(dailySteps2$steps)
-    ```
+```
 
-The total daily steps mean is `r dailyStepsMean2` and the total daily steps median is `r dailyStepsMedian2`.
+The total daily steps mean is 1.0766189\times 10^{4} and the total daily steps median is 1.0766189\times 10^{4}.
 
 The impact of imputing the data is that now the mean and median are the same.
 
@@ -130,7 +150,8 @@ For this part the weekdays()function may be of some help here. Use the dataset w
 
 2. Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.
 
-```{r part 4, echo=TRUE}
+
+```r
         ## add day_type column to identify weekday or weekend
         completeData$day_type <- ifelse(weekdays(as.Date(completeData$date)) 
                  == "Saturday" | weekdays(as.Date(completeData$date)) == "Sunday", "weekend", "weekday")
@@ -149,7 +170,8 @@ For this part the weekdays()function may be of some help here. Use the dataset w
                 ylab="Number of Steps", xlab="Interval", type = "l") 
         plot(as.numeric(names(weekdaySteps)), weekdaySteps, main="Weekday",
                 ylab="Number of Steps", xlab="Interval", type = "l")
-       
-        ```
+```
+
+![](PA1_template_files/figure-html/part 4-1.png)<!-- -->
  
                 
